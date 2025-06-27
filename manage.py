@@ -327,6 +327,118 @@ class InfoWindow(QWidget):
         main.show()
         info.hide()
 
+#-----------------------------------------------------------
+
+class AccountsWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("Accounts")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_main)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # layout
+        v_account = QVBoxLayout()
+        h_account = QHBoxLayout()
+        h_account_header = QHBoxLayout()
+        # widgets
+        name_label = QLabel("abbass")
+        name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cart_label = QLabel("6277-6831-5743-4432")
+        cart_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        information_button = QPushButton("✎")
+        information_button.clicked.connect(self.to_editaccount)
+        information_button.setFixedSize(30, 30)
+        # add to h_account
+        h_account.addWidget(name_label)
+        h_account.addWidget(cart_label)
+        h_account.addWidget(information_button)
+
+        table_name = QLabel("name")
+        table_name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        table_name.setStyleSheet("border: 1px solid #161616;border-radius: 2px;")
+        table_cart = QLabel("cart")
+        table_cart.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        table_cart.setStyleSheet("border: 1px solid #161616;border-radius: 2px;")
+        information_label = QLabel("")
+        information_label.setFixedSize(30, 30)
+        information_label.setStyleSheet("border: 1px solid #161616;border-radius: 2px;")
+        # add to h_account_header
+        h_account_header.addWidget(table_name)
+        h_account_header.addWidget(table_cart)
+        h_account_header.addWidget(information_label)
+
+        # add h to v
+        v_account.addLayout(h_account_header)
+        v_account.addLayout(h_account)
+
+        # footer button
+        h_footer = QHBoxLayout()
+        add_button = QPushButton("add")
+        add_button.clicked.connect(self.to_addaccount)
+        add_button.setFixedSize(120, 30)
+        back_button = QPushButton("back")
+        back_button.clicked.connect(self.to_main)
+        back_button.setFixedSize(120, 30)
+        # add to h_footer
+        h_footer.addStretch()
+        h_footer.addWidget(add_button)
+        h_footer.addWidget(back_button)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addLayout(v_account)
+        vbox.addStretch()
+        vbox.addLayout(h_footer)
+
+    # def
+    def to_main(self):
+        main.show()
+        account.hide()
+    
+    def to_addaccount(self):
+        addaccount.show()
+        account.hide()
+    
+    def to_editaccount(self):
+        editaccount.show()
+        account.hide()
+    
+    def to_info(self):
+        info.show()
+        account.hide()
+
 #-------------------------------------
 
 if __name__ == "__main__":
