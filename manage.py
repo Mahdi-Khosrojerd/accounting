@@ -439,6 +439,95 @@ class AccountsWindow(QWidget):
         info.show()
         account.hide()
 
+#----------------------------------------------------------
+
+class AddAccountWindow(QWidget):
+    def __init__(self, main, account):
+        super().__init__()
+        self.main = main
+        self.account = account
+        self.setWindowTitle("Add Account")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_account)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # widget
+        name_label = QLabel("Name:")
+        name_line = QLineEdit()
+        name_line.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cart_label = QLabel("Cart:")
+        cart_line = QLineEdit()
+        cart_line.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        description_label = QLabel("Description:")
+        description_line = QTextEdit()
+        # layout
+        g_info_account = QGridLayout()
+        g_info_account.addWidget(name_label, 0, 0)
+        g_info_account.addWidget(name_line, 0, 1)
+        g_info_account.addWidget(cart_label, 1, 0)
+        g_info_account.addWidget(cart_line, 1, 1)
+        g_info_account.addWidget(description_label, 2, 0)
+        g_info_account.addWidget(description_line, 2, 1)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addLayout(g_info_account)
+
+        # footer button
+        h_footer = QHBoxLayout()
+        add_button = QPushButton("save")
+        add_button.setFixedSize(200, 30)
+        back_button = QPushButton("cancel")
+        back_button.clicked.connect(self.to_account)
+        back_button.setFixedSize(200, 30)
+        # add to h_footer
+        h_footer.addWidget(add_button)
+        h_footer.addWidget(back_button)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addStretch()
+        vbox.addLayout(h_footer)
+
+    # def
+    def to_account(self):
+        account.show()
+        addaccount.hide()
+    
+    def to_info(self):
+        info.show()
+        addaccount.hide()
+
 #-------------------------------------
 
 if __name__ == "__main__":
