@@ -258,6 +258,75 @@ class AddWindow(QWidget):
         info.show()
         add.hide()
 
+#----------------------------------------------------------------
+
+class InfoWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("ZPAX")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        # header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("🏠")
+        back_button.clicked.connect(self.to_main)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # information
+        information1 = QLabel("This is an accounting program based on Python algorithms.")
+        information1.setWordWrap(True)
+        information2 = QLabel("At the age of 19, I decided to create an accounting program with a robust user interface for public consumption for free.")
+        information2.setWordWrap(True)
+        information3 = QLabel("In this program, by adding invoices, you can perform all your monthly information, including net profit and taxes, and all other accounting equations.")
+        information3.setWordWrap(True)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addWidget(information1)
+        vbox.addWidget(information2)
+        vbox.addWidget(information3)
+        vbox.addStretch()
+        
+
+        # creator
+        ___ = QLabel("_________________________")
+        ___.setStyleSheet("color: #b4b4b450;")
+        creator = QLabel("Created by: paxle")
+        creator.setStyleSheet("color: #b4b4b450;")
+        vbox.addWidget(___, alignment=Qt.AlignmentFlag.AlignCenter)
+        vbox.addWidget(creator, alignment=Qt.AlignmentFlag.AlignCenter)
+    
+    # def
+    def to_main(self):
+        main.show()
+        info.hide()
+
 #-------------------------------------
 
 if __name__ == "__main__":
