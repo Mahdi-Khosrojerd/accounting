@@ -913,6 +913,376 @@ class EditHelpfulWindow(QWidget):
 
 #-----------------------------------------------------------
 
+class StatusWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("Status")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_main)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # widget
+        inventory_label = QLabel("موجودی")
+        inventory_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        inventory_info = QLabel("1")
+        inventory_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        income_label = QLabel("درآمد")
+        income_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        income_info = QLabel("1")
+        income_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cost_label = QLabel("هزینه")
+        cost_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cost_info = QLabel("1")
+        cost_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        save_label = QLabel("اندوخته")
+        save_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        save_info = QLabel("1")
+        save_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        recreational_label = QLabel("تفریحی")
+        recreational_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        recreational_info = QLabel("1")
+        recreational_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        vandalism_label = QLabel("خرابکاری")
+        vandalism_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        vandalism_info = QLabel("1")
+        vandalism_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        other_label = QLabel("سایر")
+        other_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        other_info = QLabel("1")
+        other_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # yesterday
+        yesterday_label = QLabel("yesterday")
+        yesterday_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        yesterday_income_label = QLabel("درآمد")
+        yesterday_income_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        yesterday_income_info = QLabel("1")
+        yesterday_income_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        yesterday_cost_label = QLabel("هزینه")
+        yesterday_cost_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        yesterday_cost_info = QLabel("1")
+        yesterday_cost_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        # mounth
+        mounth_label = QLabel("mounth")
+        mounth_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_income_label = QLabel("درآمد")
+        mounth_income_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_income_info = QLabel("1")
+        mounth_income_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_cost_label = QLabel("هزینه")
+        mounth_cost_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_cost_info = QLabel("1")
+        mounth_cost_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # year
+        year_label = QLabel("year")
+        year_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        year_income_label = QLabel("درآمد")
+        year_income_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        year_income_info = QLabel("999999999")
+        year_income_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        year_cost_label = QLabel("هزینه")
+        year_cost_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        year_cost_info = QLabel("1")
+        year_cost_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # search
+        search_date = QDateEdit()
+        search_date.setAlignment(Qt.AlignmentFlag.AlignRight)
+        search_date.setCalendarPopup(True)
+        search_date.setDate(QDate.currentDate())
+        search_date.setDisplayFormat("yyyy/MM/dd")
+        search_button = QPushButton("search")
+        search_button.setFixedSize(60, 30)
+
+        # daily mounth
+        mounth_data = QLabel("1404/2/4")
+        mounth_data.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_income = QLabel("1")
+        mounth_income.setStyleSheet("color: green;")
+        mounth_income.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_cost = QLabel("1")
+        mounth_cost.setStyleSheet("color: red;")
+        mounth_cost.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        mounth_info = QPushButton("->")
+        mounth_info.clicked.connect(self.to_infostatus)
+        mounth_info.setFixedSize(30, 30)
+
+        # layout
+        g_info_all = QGridLayout()
+        h_info_daily = QHBoxLayout()
+        g_info_day = QGridLayout()
+        g_info_mounth = QGridLayout()
+        g_info_year = QGridLayout()
+        v_mounth_daily = QVBoxLayout()
+        h_mounth_daily = QHBoxLayout()
+        h_search = QHBoxLayout()
+        h_footer = QHBoxLayout()
+
+        # add to g_info_all
+        g_info_all.addWidget(inventory_label, 0, 0)
+        g_info_all.addWidget(inventory_info, 1, 0)
+        g_info_all.addWidget(income_label, 0, 1)
+        g_info_all.addWidget(income_info, 1, 1)
+        g_info_all.addWidget(cost_label, 0, 2)
+        g_info_all.addWidget(cost_info, 1, 2)
+        g_info_all.addWidget(save_label, 0, 3)
+        g_info_all.addWidget(save_info, 1, 3)
+        g_info_all.addWidget(recreational_label, 0, 4)
+        g_info_all.addWidget(recreational_info, 1, 4)
+        g_info_all.addWidget(vandalism_label, 0, 5)
+        g_info_all.addWidget(vandalism_info, 1, 5)
+        g_info_all.addWidget(other_label, 0, 6)
+        g_info_all.addWidget(other_info, 1, 6)
+
+        # add to g_info_day
+        g_info_day.addWidget(yesterday_label, 0, 0, 1, 0)
+        g_info_day.addWidget(yesterday_income_label, 1, 0)
+        g_info_day.addWidget(yesterday_income_info, 1, 1)
+        g_info_day.addWidget(yesterday_cost_label, 2, 0)
+        g_info_day.addWidget(yesterday_cost_info, 2, 1)
+
+        # add to g_info_mounth
+        g_info_mounth.addWidget(mounth_label, 0, 0, 1, 0)
+        g_info_mounth.addWidget(mounth_income_label, 1, 0)
+        g_info_mounth.addWidget(mounth_income_info, 1, 1)
+        g_info_mounth.addWidget(mounth_cost_label, 2, 0)
+        g_info_mounth.addWidget(mounth_cost_info, 2, 1)
+
+        # add to g_info_year
+        g_info_year.addWidget(year_label, 0, 0, 1, 0)
+        g_info_year.addWidget(year_income_label, 1, 0)
+        g_info_year.addWidget(year_income_info, 1, 1)
+        g_info_year.addWidget(year_cost_label, 2, 0)
+        g_info_year.addWidget(year_cost_info, 2, 1)
+
+        # add to h_mounth_daily
+        h_mounth_daily.addWidget(mounth_data)
+        h_mounth_daily.addWidget(mounth_income)
+        h_mounth_daily.addWidget(mounth_cost)
+        h_mounth_daily.addWidget(mounth_info)
+
+        # add to V_mounth_daily
+        v_mounth_daily.addLayout(h_mounth_daily)
+
+        # add to h_search
+        h_search.addWidget(search_button)
+        h_search.addWidget(search_date)
+
+        # create frame
+        def create_styled_frame(layout):
+            frame = QFrame()
+            frame.setFrameShape(QFrame.Shape.Box)
+            frame.setStyleSheet("""
+                QFrame {
+                    border: 1px solid #7e7e7e;
+                    border-radius: 4px;
+                    padding: 5px;
+                }
+            """)
+            frame.setLayout(layout)
+            return frame
+
+        # add frame
+        g_info_all_frame = create_styled_frame(g_info_all)
+        day_frame = create_styled_frame(g_info_day)
+        mounth_frame = create_styled_frame(g_info_mounth)
+        year_frame = create_styled_frame(g_info_year)
+        h_info_daily.addWidget(day_frame)
+        h_info_daily.addWidget(mounth_frame)
+        h_info_daily.addWidget(year_frame)
+
+        # scroll
+        scroll_v_mounth_daily_widget = QWidget()
+        scroll_v_mounth_daily_widget.setLayout(v_mounth_daily)
+        scroll_v_mounth_daily = QScrollArea()
+        scroll_v_mounth_daily.setWidget(scroll_v_mounth_daily_widget)
+        scroll_v_mounth_daily.setWidgetResizable(True)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addWidget(g_info_all_frame)
+        vbox.addLayout(h_info_daily)
+        vbox.addLayout(h_search)
+        vbox.addWidget(scroll_v_mounth_daily)
+        vbox.addStretch()
+    
+    # def
+    def to_main(self):
+        main.show()
+        status.hide()
+
+    def to_infostatus(self):
+        infostatus.show()
+        status.hide()
+
+#-----------------------------------------------------------
+
+class InfoStatusWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowTitle("info status")
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_status)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # layout
+        v_info_all = QVBoxLayout()
+        g_info_all = QGridLayout()
+        h_info_day = QHBoxLayout()
+
+        # widget
+        mounth_date_label = QLabel("2025/3/5")
+        mounth_date_label.setMargin(25)
+        mounth_date_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        income_label = QLabel("درآمد")
+        income_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        income_info = QLabel("1")
+        income_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cost_label = QLabel("هزینه")
+        cost_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        cost_info = QLabel("1")
+        cost_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        save_label = QLabel("اندوخته")
+        save_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        save_info = QLabel("1")
+        save_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        recreational_label = QLabel("تفریحی")
+        recreational_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        recreational_info = QLabel("1")
+        recreational_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        vandalism_label = QLabel("خرابکاری")
+        vandalism_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        vandalism_info = QLabel("1")
+        vandalism_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        other_label = QLabel("سایر")
+        other_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        other_info = QLabel("1")
+        other_info.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # daily day
+        day_data = QLabel("1404/2/4")
+        day_data.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        day_income = QLabel("1")
+        day_income.setStyleSheet("color: green;")
+        day_income.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        day_cost = QLabel("1")
+        day_cost.setStyleSheet("color: red;")
+        day_cost.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # add to g_info_all
+        g_info_all.addWidget(income_label, 0, 1)
+        g_info_all.addWidget(income_info, 1, 1)
+        g_info_all.addWidget(cost_label, 0, 2)
+        g_info_all.addWidget(cost_info, 1, 2)
+        g_info_all.addWidget(save_label, 0, 3)
+        g_info_all.addWidget(save_info, 1, 3)
+        g_info_all.addWidget(recreational_label, 0, 4)
+        g_info_all.addWidget(recreational_info, 1, 4)
+        g_info_all.addWidget(vandalism_label, 0, 5)
+        g_info_all.addWidget(vandalism_info, 1, 5)
+        g_info_all.addWidget(other_label, 0, 6)
+        g_info_all.addWidget(other_info, 1, 6)
+
+        # add to h_info_day
+        h_info_day.addWidget(day_data)
+        h_info_day.addWidget(day_income)
+        h_info_day.addWidget(day_cost)
+
+        # add to v_info_all
+        v_info_all.addWidget(mounth_date_label)
+        v_info_all.addLayout(g_info_all)
+
+        # create frame
+        def create_styled_frame(layout):
+            frame = QFrame()
+            frame.setFrameShape(QFrame.Shape.Box)
+            frame.setStyleSheet("""
+                QFrame {
+                    border: 1px solid #7e7e7e;
+                    border-radius: 4px;
+                    padding: 5px;
+                }
+            """)
+            frame.setLayout(layout)
+            return frame
+        
+        # add frame
+        v_info_all_frame = create_styled_frame(v_info_all)
+
+        # add to layout
+        vbox.addLayout(gbox)
+        vbox.addWidget(v_info_all_frame)
+        vbox.addLayout(h_info_day)
+        vbox.addStretch()
+
+    # def
+    def to_status(self):
+        status.show()
+        infostatus.hide()
+
+#-----------------------------------------------------------
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = MainWindow(AddWindow, InfoWindow, AccountsWindow, AddHelpfulWindow)
