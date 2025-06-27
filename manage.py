@@ -1283,6 +1283,44 @@ class InfoStatusWindow(QWidget):
 
 #-----------------------------------------------------------
 
+class AlarmWindow(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setFixedSize(300, 150)
+        self.setWindowTitle("ZPAX")
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+        self.setModal(True)
+
+        # layout
+        hbox = QHBoxLayout()
+        # widget
+        message_alarm = QLabel("ایا مطمعن هستید که میخواهید این ابجکت را پاک کنید ؟")
+        message_alarm.setWordWrap(True)
+        # button
+        succues_button = QPushButton("yes")
+        succues_button.clicked.connect(self.succues)
+        failed_button = QPushButton("cancel")
+        failed_button.clicked.connect(self.failed)
+        # add to hbox
+        hbox.addStretch()
+        hbox.addWidget(succues_button)
+        hbox.addWidget(failed_button)
+
+        # add to layout
+        vbox.addWidget(message_alarm)
+        vbox.addLayout(hbox)
+
+    # def
+    def succues(self):
+        self.close()
+        
+    def failed(self):
+        self.close()
+
+#-----------------------------------------------------------
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = MainWindow(AddWindow, InfoWindow, AccountsWindow, AddHelpfulWindow)
