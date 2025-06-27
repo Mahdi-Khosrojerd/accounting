@@ -624,7 +624,294 @@ class EditAccountWindow(QWidget):
         info.show()
         editaccount.hide()
 
-#-------------------------------------
+#----------------------------------------------------------
+
+class HelpfulWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("Helpful")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_main)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.clicked.connect(self.to_information)
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # widget
+        title_label = QLabel("title")
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        date_label = QLabel("date")
+        date_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        price_label = QLabel("price")
+        price_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        description_label = QLabel("description")
+        description_label.setWordWrap(True)
+        description_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        edit_button = QPushButton("edit")
+        edit_button.clicked.connect(self.to_edithelpful)
+        delete_button = QPushButton("delete")
+        delete_button.clicked.connect(self.to_alarm)
+        add_button = QPushButton("add")
+        add_button.clicked.connect(self.to_addhelpful)
+        # layout
+        v_helpful = QVBoxLayout()
+        v_helpful_info = QVBoxLayout()
+        v_helpful_description = QVBoxLayout()
+        v_helpful_button = QVBoxLayout()
+        h_helpful_all = QHBoxLayout()
+        # add to layout
+        v_helpful_info.addWidget(title_label)
+        v_helpful_info.addWidget(date_label)
+        v_helpful_info.addWidget(price_label)
+        v_helpful_description.addWidget(description_label)
+        v_helpful_button.addWidget(edit_button)
+        v_helpful_button.addWidget(delete_button)
+        h_helpful_all.addLayout(v_helpful_info)
+        h_helpful_all.addLayout(v_helpful_description)
+        h_helpful_all.addLayout(v_helpful_button)
+        v_helpful.addLayout(h_helpful_all)
+        # scroll
+        scroll_v_helpful_widget = QWidget()
+        scroll_v_helpful_widget.setLayout(v_helpful)
+        scroll_v_helpful = QScrollArea()
+        scroll_v_helpful.setWidget(scroll_v_helpful_widget)
+        scroll_v_helpful.setWidgetResizable(True)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addWidget(scroll_v_helpful)
+        vbox.addStretch()
+        vbox.addWidget(add_button)
+
+    # def
+    def to_main(self):
+        main.show()
+        helpful.hide()
+
+    def to_addhelpful(self):
+        addhelpful.show()
+        helpful.hide()
+    
+    def to_edithelpful(self):
+        edithelpful.show()
+        helpful.hide()
+    
+    def to_alarm(self):
+        alarm.show()
+    
+    def to_information(self):
+        info.show()
+        helpful.hide()
+
+#----------------------------------------------------------
+
+class AddHelpfulWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("Add Helpful")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_helpful)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # widget
+        title_label = QLabel("title:")
+        title_line = QLineEdit()
+        date_label = QLabel("date:")
+        date_line = QComboBox()
+        date_line.addItems(["هر ماه", "هر هفته", "هر روز", "هر 2 ماه", "هر 3 ماه", "هر سال"])
+        price_label = QLabel("price:")
+        price_line = QLineEdit()
+        description_label = QLabel("description:")
+        description_line = QTextEdit()
+        # layout
+        v_widget = QVBoxLayout()
+        # add widget
+        v_widget.addWidget(title_label)
+        v_widget.addWidget(title_line)
+        v_widget.addWidget(date_label)
+        v_widget.addWidget(date_line)
+        v_widget.addWidget(price_label)
+        v_widget.addWidget(price_line)
+        v_widget.addWidget(description_label)
+        v_widget.addWidget(description_line)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addLayout(v_widget)
+
+        # footer button
+        h_footer = QHBoxLayout()
+        add_button = QPushButton("add")
+        cancel_button = QPushButton("cancel")
+        cancel_button.clicked.connect(self.to_helpful)
+        h_footer.addStretch()
+        h_footer.addWidget(add_button)
+        h_footer.addWidget(cancel_button)
+        vbox.addLayout(h_footer)
+    
+    # def
+    def to_main(self):
+        main.show()
+        helpful.hide()
+    
+    def to_helpful(self):
+        helpful.show()
+        addhelpful.hide()
+    
+    def to_info(self):
+        info.show()
+        addhelpful.hide()
+
+#-----------------------------------------------------------
+
+class EditHelpfulWindow(QWidget):
+    def __init__(self, main):
+        super().__init__()
+        self.main = main
+        self.setWindowTitle("Edit Helpful")
+        self.setGeometry(100, 100, 800, 600)
+        self.setWindowIcon(QIcon('static/increase_4721635.png'))
+        vbox = QVBoxLayout()
+        self.setLayout(vbox)
+
+        #header
+        gbox = QGridLayout()
+        # application name
+        name = QLabel("zpax")
+        name.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        name.setFixedHeight(30)
+        # back button
+        back_button = QPushButton("◀")
+        back_button.clicked.connect(self.to_helpful)
+        back_button.setFixedSize(30, 30)
+        # forward button
+        forward_button = QPushButton("▶")
+        forward_button.setFixedSize(30, 30)
+        # exit button
+        exit_button = QPushButton("✖")
+        exit_button.setFixedSize(30, 30)
+        exit_button.setContentsMargins(0, 0, 0, 0)
+        exit_button.clicked.connect(self.close)
+        # information
+        information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
+        information.setFixedSize(30, 30)
+        # add header
+        gbox.addWidget(name, 0, 2)
+        gbox.addWidget(back_button, 0, 0)
+        gbox.addWidget(forward_button, 0, 1)
+        gbox.addWidget(information, 0, 3)
+        gbox.addWidget(exit_button, 0, 4)
+
+        # widget
+        title_label = QLabel("title:")
+        title_line = QLineEdit()
+        date_label = QLabel("date:")
+        date_line = QComboBox()
+        date_line.addItems(["هر ماه", "هر هفته", "هر روز", "هر 2 ماه", "هر 3 ماه", "هر سال"])
+        price_label = QLabel("price:")
+        price_line = QLineEdit()
+        description_label = QLabel("description:")
+        description_line = QTextEdit()
+        # layout
+        v_widget = QVBoxLayout()
+        # add widget
+        v_widget.addWidget(title_label)
+        v_widget.addWidget(title_line)
+        v_widget.addWidget(date_label)
+        v_widget.addWidget(date_line)
+        v_widget.addWidget(price_label)
+        v_widget.addWidget(price_line)
+        v_widget.addWidget(description_label)
+        v_widget.addWidget(description_line)
+
+        # add layout
+        vbox.addLayout(gbox)
+        vbox.addLayout(v_widget)
+
+        # footer button
+        h_footer = QHBoxLayout()
+        add_button = QPushButton("add")
+        cancel_button = QPushButton("cancel")
+        cancel_button.clicked.connect(self.to_helpful)
+        h_footer.addStretch()
+        h_footer.addWidget(add_button)
+        h_footer.addWidget(cancel_button)
+        vbox.addLayout(h_footer)
+    
+    # def
+    def to_main(self):
+        main.show()
+        helpful.hide()
+    
+    def to_helpful(self):
+        helpful.show()
+        edithelpful.hide()
+    
+    def to_info(self):
+        info.show()
+        edithelpful.hide()
+
+#-----------------------------------------------------------
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
