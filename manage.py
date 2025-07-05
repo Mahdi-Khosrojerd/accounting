@@ -499,10 +499,6 @@ class AddAccountWindow(QWidget):
         g_info_account.addWidget(description_label, 2, 0)
         g_info_account.addWidget(description_line, 2, 1)
 
-        # add layout
-        vbox.addLayout(gbox)
-        vbox.addLayout(g_info_account)
-
         # footer button
         h_footer = QHBoxLayout()
         add_button = QPushButton("save")
@@ -516,6 +512,7 @@ class AddAccountWindow(QWidget):
 
         # add layout
         vbox.addLayout(gbox)
+        vbox.addLayout(g_info_account)
         vbox.addStretch()
         vbox.addLayout(h_footer)
 
@@ -588,10 +585,6 @@ class EditAccountWindow(QWidget):
         g_info_account.addWidget(description_label, 2, 0)
         g_info_account.addWidget(description_line, 2, 1)
 
-        # add layout
-        vbox.addLayout(gbox)
-        vbox.addLayout(g_info_account)
-
         # footer button
         h_footer = QHBoxLayout()
         add_button = QPushButton("save")
@@ -609,6 +602,7 @@ class EditAccountWindow(QWidget):
 
         # add layout
         vbox.addLayout(gbox)
+        vbox.addLayout(g_info_account)
         vbox.addStretch()
         vbox.addLayout(h_footer)
 
