@@ -937,6 +937,7 @@ class StatusWindow(QWidget):
         exit_button.clicked.connect(self.close)
         # information
         information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
         information.setFixedSize(30, 30)
         # add header
         gbox.addWidget(name, 0, 2)
@@ -1140,6 +1141,10 @@ class StatusWindow(QWidget):
     def to_infostatus(self):
         infostatus.show()
         status.hide()
+    
+    def to_info(self):
+        info.show()
+        status.hide()
 
 #-----------------------------------------------------------
 
@@ -1172,6 +1177,7 @@ class InfoStatusWindow(QWidget):
         exit_button.clicked.connect(self.close)
         # information
         information = QPushButton("❓")
+        information.clicked.connect(self.to_info)
         information.setFixedSize(30, 30)
         # add header
         gbox.addWidget(name, 0, 2)
@@ -1273,6 +1279,10 @@ class InfoStatusWindow(QWidget):
     # def
     def to_status(self):
         status.show()
+        infostatus.hide()
+
+    def to_info(self):
+        info.show()
         infostatus.hide()
 
 #-----------------------------------------------------------
